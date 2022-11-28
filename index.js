@@ -2,7 +2,6 @@ const generateHTML = require('./src/html-template');
 const fs = require('fs');
 const inquirer = require('inquirer');
 
-const Employee = require('./lib/Employee');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
@@ -57,7 +56,7 @@ const init = () => {
         },
         {
             type: 'input',
-            name: 'email',
+            name: 'officeNumber',
             message: 'What is the Manager office number?',
             validate: officeInput => {
                 if(officeInput) {
@@ -69,193 +68,172 @@ const init = () => {
             }
         },
         {
-            type: 'list',
-            name: 'moreEmployees',
-            message: 'Would you like to add another employee?',
-            choices: ['Add Engineer', 'Add Intern', 'Finish building my team']
+            type: `list`,
+            name: `moreEmployee`,
+            message: `Would you like to add another employee?`,
+            choices: ['Add Engineer', 'Add Intern', 'Build my team']
         }
         
     ])
     .then (data => {
-        const {name, id, email, office, moreEmployees} = data;
-        const manager = new Manager (name, id, email, office);
+        const {name, id, email, officeNumber, moreEmployee} = data;
+        const manager = new Manager (name, id, email, officeNumber);
 
         employees.push(manager);
 
-        return moreEmployees;
-    });
-}
+        return moreEmployee;
+    })
+};
 
 const addEmployee = (data) => {
     if(data === 'Add Engineer') {
-        return inquirer.prompt ([
+        return inquirer.prompt([
             {
-                type: 'input',
-                name: 'name',
-                message: 'Who is the Engineer for your team?',
+                type: `input`,
+                name: `name`,
+                message: `What is the engineer's name?`,
                 validate: nameInput => {
-                    if (nameInput) {
+                    if(nameInput) {
                         return true;
-                    }else {
-                        console.log('Please enter a name for the Engineer!')
+                    } else {
+                        console.log(`Please enter the engineer's name!`);
                         return false;
                     }
                 }
             },
             {
-                type: 'input',
-                name: 'id',
-                message: 'What is the Engineer id?',
+                type: `input`,
+                name: `id`,
+                message: `What is the engineer's id?(Required)`,
                 validate: idInput => {
-                    if (idInput) {
+                    if(idInput) {
                         return true;
-                    }else {
-                        console.log('Please enter an id for the Engineer!')
+                    } else {
+                        console.log(`Please enter the engineer's id!`);
                         return false;
                     }
                 }
             },
             {
-                type: 'input',
-                name: 'email',
-                message: 'What is the email for the Engineer?',
+                type: `input`,
+                name: `email`,
+                message: `What is the engineer's email?(Required)`,
                 validate: emailInput => {
-                    if (emailInput) {
+                    if(emailInput) {
                         return true;
-                    }else {
-                        console.log('Please enter an email for the Engineer!')
+                    } else {
+                        console.log(`Please enter the engineer's email!`);
                         return false;
                     }
                 }
             },
             {
-                type: 'input',
-                name: 'github',
-                message: 'What is the Github username for the Engineer?',
+                type: `input`,
+                name: `github`,
+                message: `What is the engineer's GitHub username?(Required)`,
                 validate: githubInput => {
-                    if (githubInput) {
+                    if(githubInput) {
                         return true;
-                    }else {
-                        console.log('Please enter a Github username for the Engineer!')
+                    } else {
+                        console.log(`Please enter a Github username for the engineer`);
                         return false;
                     }
                 }
             },
             {
-                type: 'list',
-                name: 'moreEmployees',
-                message: 'Would you like to add another employee?',
-                choices: ['Add Engineer', 'Add Intern', 'Finish building my team']
+                type: `list`,
+                name: `moreEmployee`,
+                message: `Would you like to add another employee?`,
+                choices: ['Add Engineer', 'Add Intern', 'Build my team']
             }
         ])
-        .then (data => {
-            const {name, id, email, github, moreEmployees} = data;
-            const engineer = new Engineer (name, id, email, github);
-    
+        .then(data => {
+            const { name, id, email, github, moreEmployee } = data;
+            const engineer = new Engineer(name, id, email, github);
+
             employees.push(engineer);
-    
-            addEmployee(moreEmployees);
+
+            addEmployee(moreEmployee);
         })
     } else if (data === 'Add Intern') {
-        return inquirer.prompt ([
+        return inquirer.prompt([
             {
-                type: 'input',
-                name: 'name',
-                message: 'Who is the Intern for your team?',
+                type: `input`,
+                name: `name`,
+                message: `What is the intern's name?`,
                 validate: nameInput => {
-                    if (nameInput) {
+                    if(nameInput) {
                         return true;
-                    }else {
-                        console.log('Please enter a name for the Intern!')
+                    } else {
+                        console.log(`Please enter the intern's name!`);
                         return false;
                     }
-
                 }
             },
             {
-                type: 'input',
-                name: 'id',
-                message: 'What is the Intern id?',
+                type: `input`,
+                name: `id`,
+                message: `What is the intern's id?`,
                 validate: idInput => {
-                    if (idInput) {
+                    if(idInput) {
                         return true;
-                    }else {
-                        console.log('Please enter an id for the Intern!')
+                    } else {
+                        console.log(`Please enter the intern's id!`);
                         return false;
                     }
-
                 }
             },
             {
-                type: 'input',
-                name: 'email',
-                message: 'What is the Intern email?',
+                type: `input`,
+                name: `email`,
+                message: `What is the intern's email?`,
                 validate: emailInput => {
-                    if (emailInput) {
+                    if(emailInput) {
                         return true;
-                    }else {
-                        console.log('Please enter an email for the Intern!')
+                    } else {
+                        console.log(`Please enter the intern's email!`);
                         return false;
                     }
-
                 }
             },
             {
-                type: 'input',
-                name: 'school',
-                message: 'What is the school name for the Intern?',
+                type: `input`,
+                name: `school`,
+                message: `What is the intern's school name?`,
                 validate: schoolInput => {
-                    if (schoolInput) {
+                    if(schoolInput) {
                         return true;
-                    }else {
-                        console.log('Please enter a school name for the Intern!')
+                    } else {
+                        console.log(`Please enter the intern's school name!`);
                         return false;
                     }
-
                 }
             },
             {
-                type: 'list',
-                name: 'moreEmployees',
-                message: 'Would you like to add another employee?',
-                choices: ['Add Engineer', 'Add Intern', 'Finish building my team']
+                type: `list`,
+                name: `moreEmployee`,
+                message: `Would you like to add another employee?`,
+                choices: ['Add Engineer', 'Add Intern', 'Build my team']
             }
-
         ])
-        .then (data => {
-            const {name, id, email, school, moreEmployees} = data;
-            const intern = new Intern (name, id, email, school);
-    
+        .then(data => {
+            const { name, id, email, school, moreEmployee } = data;
+            const intern = new Intern(name, id, email, school);
+
             employees.push(intern);
-    
-            addEmployee(moreEmployees);
+
+            addEmployee(moreEmployee);
         })
-    }else {
+    } else {
         const html = generateHTML(employees);
         return writeFile(html);
     }
 }
 
-init ()
-    .then(data => {
-        addEmployee(data)
-    })
-    .catch(err => {
-        console.log(err);
-    })
-
-    const writeFile = (data) => {
-        return new Promise((resolve, reject) => {
-            fs.writeFile('./dist/index.html', data, err => {
-                if(err) {
-                    reject(err);
-                    return;
-                }
-    
-                resolve({
-                    ok: true,
-                    message: 'File Created!'
-                });
-            });
-        });
-    };
+init()
+  .then(data => {
+      addEmployee(data)
+  })
+  .catch(err => {
+      console.log(err);
+  })    
