@@ -24,7 +24,9 @@ To start the application run node index.js , it will be followed by prompts to e
 
 ![Screenshot 2022-12-01 at 11 28 48 PM (2)](https://user-images.githubusercontent.com/110876203/205231622-96316d80-50cf-4b24-8e08-ae552df93545.png)
 
+## Video 
 
+https://drive.google.com/file/d/1XCkMZgcSHA8uemNEC1aV31FsykYSanRh/view
 
 ## License
 
